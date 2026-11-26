@@ -1,1 +1,9 @@
-/* You can add global styles to this file, and also import other style files */
+/* Estilos globales: lo demás lo hace Bootstrap */
+.foto-mascota {
+  height: 200px;
+  object-fit: cover;
+}
+.foto-vacia {
+  height: 200px;
+  font-size: 4rem;
+}
