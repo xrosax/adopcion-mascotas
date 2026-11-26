@@ -1,0 +1,98 @@
+<div class="row justify-content-center">
+  <div class="col-12 col-lg-9">
+    <h1 class="h3">Solicitud de adopción</h1>
+    <p class="text-body-secondary">Completa el formulario. La mascota quedará <strong>"En proceso"</strong> mientras se revisa tu solicitud.</p>
+
+    @if (error()) {
+      <div class="alert alert-danger"><i class="bi bi-exclamation-triangle"></i> {{ error() }}</div>
+    }
+
+    @if (disponibles().length === 0) {
+      <div class="alert alert-warning">
+        Por ahora no hay mascotas disponibles para solicitar.
+        <a routerLink="/mascotas" class="alert-link">Ver mascotas</a>
+      </div>
+    } @else {
+      <form class="card card-body shadow-sm" [formGroup]="form" (ngSubmit)="enviar()" novalidate>
+        <div class="row g-3">
+          <div class="col-12 col-md-7">
+            <label class="form-label" for="mascota">Mascota *</label>
+            <select id="mascota" class="form-select" formControlName="mascotaId" [class.is-invalid]="invalido('mascotaId')">
+              <option [ngValue]="0" disabled>Elige una mascota...</option>
+              @for (m of disponibles(); track m.id) {
+                <option [ngValue]="m.id">{{ m.nombre | titlecase }} ({{ m.especie }}, {{ m.tamano }})</option>
+              }
+            </select>
+            <div class="invalid-feedback">Debes elegir una mascota.</div>
+          </div>
+
+          <div class="col-12 col-md-5">
+            @if (elegida(); as m) {
+              <div class="border rounded p-2 h-100 bg-body-tertiary small">
+                <div class="d-flex justify-content-between">
+                  <strong>{{ m.nombre | titlecase }}</strong>
+                  <app-estado-badge [estado]="m.estado" />
+                </div>
+                <div>{{ m.descripcion }}</div>
+                <div class="text-body-secondary"><i class="bi bi-geo-alt"></i> {{ m.ubicacion }}</div>
+              </div>
+            }
+          </div>
+
+          <div class="col-12 col-md-4">
+            <label class="form-label" for="vivienda">Tipo de vivienda *</label>
+            <select id="vivienda" class="form-select" formControlName="tipoVivienda">
+              <option value="casa">Casa</option>
+              <option value="departamento">Departamento</option>
+              <option value="cuarto">Cuarto</option>
+            </select>
+          </div>
+          <div class="col-12 col-md-4">
+            <label class="form-label" for="tel">Celular de contacto *</label>
+            <input id="tel" class="form-control" formControlName="telefono" [class.is-invalid]="invalido('telefono')">
+            <div class="invalid-feedback">8 dígitos, empieza con 6 o 7.</div>
+          </div>
+          <div class="col-12 col-md-4 d-flex align-items-end">
+            <div class="form-check form-switch mb-2">
+              <input id="patio" type="checkbox" class="form-check-input" formControlName="tienePatio">
+              <label class="form-check-label" for="patio">Tengo patio</label>
+            </div>
+          </div>
+
+          @if (faltaPatio()) {
+            <div class="col-12">
+              <div class="alert alert-warning py-2 mb-0">
+                <i class="bi bi-house"></i> Un perro <strong>grande</strong> necesita una vivienda con patio.
+                Marca "Tengo patio" o elige otra mascota.
+              </div>
+            </div>
+          }
+
+          <div class="col-12">
+            <label class="form-label" for="motivo">¿Por qué quieres adoptar? *</label>
+            <textarea id="motivo" rows="4" class="form-control" formControlName="motivo"
+                      [class.is-invalid]="invalido('motivo')"></textarea>
+            <div class="invalid-feedback">Explica tu motivo en al menos 20 caracteres (máx. 400).</div>
+            <div class="form-text">{{ form.controls.motivo.value.length }}/400</div>
+          </div>
+
+          <div class="col-12">
+            <div class="form-check">
+              <input id="comp" type="checkbox" class="form-check-input" formControlName="compromiso"
+                     [class.is-invalid]="invalido('compromiso')">
+              <label class="form-check-label" for="comp">
+                Me comprometo a cuidarla, vacunarla y no abandonarla. *
+              </label>
+              <div class="invalid-feedback">Debes aceptar el compromiso.</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="d-flex flex-column flex-sm-row gap-2 mt-4">
+          <button class="btn btn-success" [disabled]="guardando()"><i class="bi bi-send"></i> Enviar solicitud</button>
+          <a class="btn btn-outline-secondary" routerLink="/mascotas">Volver</a>
+        </div>
+      </form>
+    }
+  </div>
+</div>

@@ -1,0 +1,74 @@
+<div class="row justify-content-center">
+  <div class="col-12 col-lg-8">
+    <h1 class="h3">Publicar una mascota</h1>
+    <p class="text-body-secondary">¿Rescataste un animalito o lo tienes en casa temporal? Publícalo para que encuentre hogar.</p>
+
+    <form class="card card-body shadow-sm" [formGroup]="form" (ngSubmit)="guardar()" novalidate>
+      <div class="row g-3">
+        <div class="col-12 col-md-6">
+          <label class="form-label" for="nombre">Nombre *</label>
+          <input id="nombre" class="form-control" formControlName="nombre" [class.is-invalid]="invalido('nombre')">
+          <div class="invalid-feedback">Entre 2 y 30 caracteres.</div>
+        </div>
+        <div class="col-6 col-md-3">
+          <label class="form-label" for="especie">Especie *</label>
+          <select id="especie" class="form-select" formControlName="especie">
+            <option value="perro">Perro</option>
+            <option value="gato">Gato</option>
+            <option value="otro">Otro</option>
+          </select>
+        </div>
+        <div class="col-6 col-md-3">
+          <label class="form-label" for="sexo">Sexo *</label>
+          <select id="sexo" class="form-select" formControlName="sexo">
+            <option value="macho">Macho</option>
+            <option value="hembra">Hembra</option>
+          </select>
+        </div>
+        <div class="col-6 col-md-4">
+          <label class="form-label" for="tamano">Tamaño *</label>
+          <select id="tamano" class="form-select" formControlName="tamano">
+            <option value="pequeño">Pequeño</option>
+            <option value="mediano">Mediano</option>
+            <option value="grande">Grande</option>
+          </select>
+        </div>
+        <div class="col-6 col-md-4">
+          <label class="form-label" for="edad">Edad aproximada (meses) *</label>
+          <input id="edad" type="number" class="form-control" formControlName="edadMeses" [class.is-invalid]="invalido('edadMeses')">
+          <div class="invalid-feedback">Entre 1 y 300 meses.</div>
+        </div>
+        <div class="col-12 col-md-4">
+          <label class="form-label" for="ubicacion">Zona / barrio *</label>
+          <input id="ubicacion" class="form-control" formControlName="ubicacion" placeholder="Ej.: Zona Norte"
+                 [class.is-invalid]="invalido('ubicacion')">
+          <div class="invalid-feedback">Indica dónde está la mascota.</div>
+        </div>
+        <div class="col-12">
+          <label class="form-label" for="descripcion">Descripción *</label>
+          <textarea id="descripcion" rows="3" class="form-control" formControlName="descripcion"
+                    placeholder="¿Cómo es? ¿Dónde lo encontraste? ¿Está vacunado?"
+                    [class.is-invalid]="invalido('descripcion')"></textarea>
+          <div class="invalid-feedback">Entre 15 y 300 caracteres.</div>
+          <div class="form-text">{{ form.controls.descripcion.value.length }}/300</div>
+        </div>
+        <div class="col-12 col-md-8">
+          <label class="form-label" for="foto">Foto (opcional, máx. 1 MB)</label>
+          <input id="foto" type="file" accept="image/*" class="form-control" [class.is-invalid]="errorFoto()"
+                 (change)="elegirFoto($event)">
+          <div class="invalid-feedback">{{ errorFoto() }}</div>
+        </div>
+        <div class="col-12 col-md-4">
+          @if (foto()) {
+            <img [src]="foto()" class="img-thumbnail w-100 foto-mascota" alt="Vista previa">
+          }
+        </div>
+      </div>
+
+      <div class="d-flex flex-column flex-sm-row gap-2 mt-4">
+        <button class="btn btn-success" [disabled]="guardando()"><i class="bi bi-check-lg"></i> Publicar</button>
+        <a class="btn btn-outline-secondary" routerLink="/mascotas">Cancelar</a>
+      </div>
+    </form>
+  </div>
+</div>
