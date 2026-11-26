@@ -1,0 +1,71 @@
+<div class="row justify-content-center">
+  <div class="col-12 col-sm-10 col-md-7 col-lg-5">
+    <div class="card shadow-sm">
+      <div class="card-header bg-white">
+        <ul class="nav nav-tabs card-header-tabs">
+          <li class="nav-item">
+            <button class="nav-link" [class.active]="modo() === 'login'" (click)="cambiarModo('login')">Ingresar</button>
+          </li>
+          <li class="nav-item">
+            <button class="nav-link" [class.active]="modo() === 'registro'" (click)="cambiarModo('registro')">Crear cuenta</button>
+          </li>
+        </ul>
+      </div>
+
+      <div class="card-body p-4">
+        @if (error()) {
+          <div class="alert alert-danger py-2"><i class="bi bi-exclamation-triangle"></i> {{ error() }}</div>
+        }
+
+        @if (modo() === 'login') {
+          <form [formGroup]="formLogin" (ngSubmit)="ingresar()" novalidate>
+            <div class="mb-3">
+              <label class="form-label" for="le">Correo</label>
+              <input id="le" type="email" class="form-control" formControlName="email"
+                     [class.is-invalid]="formLogin.controls.email.touched && formLogin.controls.email.invalid">
+              <div class="invalid-feedback">Escribe un correo válido.</div>
+            </div>
+            <div class="mb-3">
+              <label class="form-label" for="lp">Contraseña</label>
+              <input id="lp" type="password" class="form-control" formControlName="password"
+                     [class.is-invalid]="formLogin.controls.password.touched && formLogin.controls.password.invalid">
+              <div class="invalid-feedback">La contraseña es obligatoria.</div>
+            </div>
+            <button class="btn btn-success w-100" [disabled]="cargando()">Ingresar</button>
+            <p class="text-body-secondary small mt-3 mb-0">
+              Cuenta de prueba: <strong>refugio&#64;huellitas.bo</strong> / <strong>refugio123</strong>
+            </p>
+          </form>
+        } @else {
+          <form [formGroup]="formRegistro" (ngSubmit)="crearCuenta()" novalidate>
+            <div class="mb-3">
+              <label class="form-label" for="rn">Nombre completo</label>
+              <input id="rn" class="form-control" formControlName="nombre"
+                     [class.is-invalid]="formRegistro.controls.nombre.touched && formRegistro.controls.nombre.invalid">
+              <div class="invalid-feedback">El nombre debe tener al menos 3 letras.</div>
+            </div>
+            <div class="mb-3">
+              <label class="form-label" for="re">Correo</label>
+              <input id="re" type="email" class="form-control" formControlName="email"
+                     [class.is-invalid]="formRegistro.controls.email.touched && formRegistro.controls.email.invalid">
+              <div class="invalid-feedback">Escribe un correo válido.</div>
+            </div>
+            <div class="mb-3">
+              <label class="form-label" for="rt">Celular</label>
+              <input id="rt" class="form-control" formControlName="telefono" placeholder="70000000"
+                     [class.is-invalid]="formRegistro.controls.telefono.touched && formRegistro.controls.telefono.invalid">
+              <div class="invalid-feedback">Debe tener 8 dígitos y empezar con 6 o 7.</div>
+            </div>
+            <div class="mb-3">
+              <label class="form-label" for="rp">Contraseña</label>
+              <input id="rp" type="password" class="form-control" formControlName="password"
+                     [class.is-invalid]="formRegistro.controls.password.touched && formRegistro.controls.password.invalid">
+              <div class="invalid-feedback">Mínimo 6 caracteres.</div>
+            </div>
+            <button class="btn btn-success w-100" [disabled]="cargando()">Crear cuenta</button>
+          </form>
+        }
+      </div>
+    </div>
+  </div>
+</div>
