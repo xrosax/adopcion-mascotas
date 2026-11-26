@@ -1,59 +1,72 @@
-# AdopcionMascotas
+# 🐾 Huellitas Oruro — Portal de adopción de mascotas
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 22.2.7.
+Aplicación web en **Angular 22** + **Bootstrap 5** + **IndexedDB** para el Examen Final.
 
-## Development server
+Las personas pueden:
+- **Consultar** mascotas disponibles (con búsqueda por texto y filtros por especie y estado).
+- **Enviar una solicitud de adopción** (formulario con validaciones y reglas).
+- **Revisar el historial** de solicitudes enviadas y recibidas, filtrando por estado.
+- **Ver el detalle** de una solicitud (`/solicitudes/:id`) y **cancelarla**, o, si publicaron la mascota, **aprobarla o rechazarla**.
+- **Publicar una mascota** (por ejemplo, un perrito de la calle que tienen en casa temporal).
 
-To start a local development server, run:
+## Regla principal
+Una mascota pasa a estado **"En proceso"** al recibir una solicitud y **no acepta más solicitudes** hasta que se rechace o se cancele.
+- Cancelada / Rechazada → la mascota vuelve a **Disponible**.
+- Aprobada → la mascota pasa a **Adoptada**.
+- Una solicitud ya procesada no se puede modificar de nuevo.
 
+Reglas extra: no puedes solicitar una mascota que tú publicaste, y un perro grande requiere vivienda con patio.
+
+## Requisitos
+- [Node.js](https://nodejs.org/) 20.19 o superior (recomendado 22 LTS)
+- Angular CLI: `npm install -g @angular/cli`
+
+## Instalación y ejecución
 ```bash
-ng serve
+git clone https://github.com/xrosax/adopcion-mascotas.git
+cd adopcion-mascotas
+npm install
+ng serve -o
+```
+Se abre en http://localhost:4200
+
+## Cuenta de prueba
+| Correo | Contraseña | Rol |
+|---|---|---|
+| refugio@huellitas.bo | refugio123 | Publicó las mascotas de ejemplo (puede aprobar/rechazar) |
+
+También puedes crear tu propia cuenta desde **Ingresar → Crear cuenta**.
+
+> Para reiniciar los datos: F12 → Application → IndexedDB → `huellitas-db` → Delete database.
+
+## Estructura
+```
+src/app/
+├── models/modelos.ts            Interfaces: Usuario, Mascota, Solicitud
+├── services/
+│   ├── db.service.ts            Acceso a IndexedDB (único que la toca) + datos iniciales
+│   ├── auth.service.ts          Registro, login y sesión
+│   └── adopcion.service.ts      Reglas del negocio (solicitar, cancelar, aprobar...)
+├── guards/auth.guard.ts         Protege las rutas que requieren sesión
+├── components/
+│   ├── mascota-card/            Componente hijo: input() mascota, output() solicitar
+│   └── estado-badge/            Componente hijo: input() estado, usa ngClass
+└── pages/
+    ├── login/                   Ingresar / crear cuenta
+    ├── mascotas/                1. Consulta principal
+    ├── nueva-solicitud/         2. Registro
+    ├── historial/               3. Historial
+    ├── detalle-solicitud/       4. Detalle y actualización
+    └── publicar-mascota/        Extra: publicar mascota
 ```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+## Tecnologías usadas (requisitos del examen)
+- **Pipes:** `date`, `titlecase`, `uppercase`
+- **Directivas:** `routerLink`, `routerLinkActive`, `ngClass`, `formGroup`/`formControlName`
+- **Plantillas:** `{{ }}`, `[propiedad]`, `(evento)`, `@if`, `@for`
+- **Formularios reactivos** con validaciones y mensajes
+- **Rutas** con lazy loading, guard y parámetro `:id`
 
-## Code scaffolding
-
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
-
-```bash
-ng generate component component-name
-```
-
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
-
-```bash
-ng generate --help
-```
-
-## Building
-
-To build the project run:
-
-```bash
-ng build
-```
-
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
-
-```bash
-ng test
-```
-
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+## Autores
+## Autores
+- ROSALINDA AIMA BAUTISTA— [@xrosax](https://github.com/xrosax)
