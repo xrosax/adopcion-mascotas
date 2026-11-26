@@ -1,5 +1,10 @@
 <div class="row justify-content-center">
   <div class="col-12 col-sm-10 col-md-7 col-lg-5">
+    <div class="hero text-center py-4 mb-3">
+      <div class="display-5">🐾</div>
+      <h1 class="h4 mb-1">Bienvenido a Huellitas</h1>
+      <p class="mb-0 small">Ingresa para adoptar o publicar una mascota</p>
+    </div>
     <div class="card shadow-sm">
       <div class="card-header bg-white">
         <ul class="nav nav-tabs card-header-tabs">
@@ -31,7 +36,7 @@
                      [class.is-invalid]="formLogin.controls.password.touched && formLogin.controls.password.invalid">
               <div class="invalid-feedback">La contraseña es obligatoria.</div>
             </div>
-            <button class="btn btn-success w-100" [disabled]="cargando()">Ingresar</button>
+            <button class="btn btn-celeste w-100" [disabled]="cargando()">Ingresar</button>
             <p class="text-body-secondary small mt-3 mb-0">
               Cuenta de prueba: <strong>refugio&#64;huellitas.bo</strong> / <strong>refugio123</strong>
             </p>
@@ -62,7 +67,7 @@
                      [class.is-invalid]="formRegistro.controls.password.touched && formRegistro.controls.password.invalid">
               <div class="invalid-feedback">Mínimo 6 caracteres.</div>
             </div>
-            <button class="btn btn-success w-100" [disabled]="cargando()">Crear cuenta</button>
+            <button class="btn btn-celeste w-100" [disabled]="cargando()">Crear cuenta</button>
           </form>
         }
       </div>

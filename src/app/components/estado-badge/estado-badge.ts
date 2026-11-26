@@ -11,11 +11,11 @@ import { NgClass } from '@angular/common';
   imports: [NgClass],
   template: `
     <span class="badge rounded-pill" [ngClass]="{
-      'text-bg-success':   estado() === 'Disponible' || estado() === 'Aprobada',
-      'text-bg-warning':   estado() === 'En proceso' || estado() === 'Pendiente',
-      'text-bg-primary':   estado() === 'Adoptada',
-      'text-bg-danger':    estado() === 'Rechazada',
-      'text-bg-secondary': estado() === 'Cancelada'
+      'estado-disponible': estado() === 'Disponible' || estado() === 'Aprobada',
+      'estado-proceso':    estado() === 'En proceso' || estado() === 'Pendiente',
+      'estado-adoptada':   estado() === 'Adoptada',
+      'estado-rechazada':  estado() === 'Rechazada',
+      'estado-cancelada':  estado() === 'Cancelada'
     }">{{ estado() }}</span>
   `,
 })

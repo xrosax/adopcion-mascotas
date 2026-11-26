@@ -1,7 +1,7 @@
 <!-- MENÚ DE NAVEGACIÓN (Bootstrap navbar, se colapsa en celular) -->
-<nav class="navbar navbar-expand-lg navbar-dark bg-success sticky-top shadow-sm">
+<nav class="navbar navbar-expand-lg navbar-dark navbar-huellitas sticky-top">
   <div class="container">
-    <a class="navbar-brand fw-bold" routerLink="/mascotas">🐾 Huellitas Oruro</a>
+    <a class="navbar-brand fw-bold" routerLink="/mascotas">Huellitas Oruro</a>
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menu"
             aria-controls="menu" aria-expanded="false" aria-label="Abrir menú">
@@ -47,6 +47,13 @@
   </div>
 </nav>
 
-<main class="container py-4">
+<main class="container py-4 flex-grow-1">
   <router-outlet />
 </main>
+
+<footer class="pie py-3 mt-4">
+  <div class="container d-flex flex-column flex-sm-row justify-content-between gap-1 small">
+    <span>Huellitas Oruro · Portal de adopción de mascotas</span>
+    <span>Todos los derechos reservados</span>
+  </div>
+</footer>

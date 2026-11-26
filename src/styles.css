@@ -1,4 +1,138 @@
-/* Estilos globales: lo demás lo hace Bootstrap */
+/* =========================================================
+   PALETA HUELLITAS: celeste, celeste claro, blanco, negro y plomo
+   Todo el diseño usa estas variables: si cambias un color aquí,
+   cambia en toda la aplicación.
+   ========================================================= */
+:root {
+  --celeste: #0ea5e9;          /* celeste principal (botones, enlaces) */
+  --celeste-oscuro: #0284c7;   /* hover de botones */
+  --celeste-claro: #e0f2fe;    /* fondos suaves */
+  --celeste-medio: #7dd3fc;    /* detalles */
+  --plomo: #64748b;            /* textos secundarios */
+  --plomo-oscuro: #334155;     /* plomo fuerte para degradados */
+  --plomo-claro: #e2e8f0;      /* bordes */
+  --negro: #0f172a;            /* títulos y texto principal */
+  --blanco: #ffffff;
+
+  /* Degradados celeste -> plomo */
+  --degradado: linear-gradient(135deg, #0ea5e9 0%, #38bdf8 35%, #64748b 100%);
+  --degradado-oscuro: linear-gradient(135deg, #0284c7 0%, #475569 100%);
+  --degradado-suave: linear-gradient(180deg, #e0f2fe 0%, #f1f5f9 100%);
+
+  /* Sobrescribimos colores base de Bootstrap */
+  --bs-body-color: var(--negro);
+  --bs-link-color: var(--celeste-oscuro);
+  --bs-link-hover-color: var(--plomo-oscuro);
+  --bs-border-radius: 0.6rem;
+}
+
+body {
+  background: var(--degradado-suave);
+  background-attachment: fixed;
+  min-height: 100vh;
+}
+
+h1, h2, h3, .h1, .h2, .h3, .h4, .h5 {
+  color: var(--negro);
+  font-weight: 700;
+}
+
+.text-body-secondary { color: var(--plomo) !important; }
+
+/* ---------- Barra de navegación con degradado ---------- */
+.navbar-huellitas {
+  background: var(--degradado-oscuro);
+  box-shadow: 0 4px 18px rgba(15, 23, 42, 0.25);
+}
+.navbar-huellitas .nav-link {
+  color: rgba(255, 255, 255, 0.85) !important;
+  border-radius: 0.5rem;
+  padding: 0.4rem 0.8rem !important;
+  transition: background 0.2s;
+}
+.navbar-huellitas .nav-link:hover { background: rgba(255, 255, 255, 0.12); }
+.navbar-huellitas .nav-link.active {
+  background: rgba(255, 255, 255, 0.22);
+  font-weight: 600;
+}
+
+/* ---------- Botones ---------- */
+.btn-celeste {
+  --bs-btn-color: #fff;
+  --bs-btn-bg: var(--celeste);
+  --bs-btn-border-color: var(--celeste);
+  --bs-btn-hover-color: #fff;
+  --bs-btn-hover-bg: var(--celeste-oscuro);
+  --bs-btn-hover-border-color: var(--celeste-oscuro);
+  --bs-btn-active-bg: var(--celeste-oscuro);
+  --bs-btn-disabled-bg: var(--plomo);
+  --bs-btn-disabled-border-color: var(--plomo);
+  --bs-btn-disabled-color: #fff;
+  background-image: var(--degradado);
+  border: none;
+  font-weight: 600;
+  box-shadow: 0 4px 12px rgba(14, 165, 233, 0.3);
+  transition: transform 0.15s, box-shadow 0.15s;
+}
+.btn-celeste:hover:not(:disabled) {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 16px rgba(14, 165, 233, 0.4);
+  background-image: var(--degradado-oscuro);
+}
+.btn-celeste:disabled { background-image: none; box-shadow: none; }
+
+.btn-outline-celeste {
+  --bs-btn-color: var(--celeste-oscuro);
+  --bs-btn-border-color: var(--celeste);
+  --bs-btn-hover-color: #fff;
+  --bs-btn-hover-bg: var(--celeste);
+  --bs-btn-hover-border-color: var(--celeste);
+  --bs-btn-active-bg: var(--celeste-oscuro);
+  font-weight: 600;
+}
+
+.text-celeste { color: var(--celeste) !important; }
+.bg-celeste-claro { background: var(--celeste-claro) !important; }
+
+/* ---------- Encabezado (hero) de la página de mascotas ---------- */
+.hero {
+  background: var(--degradado);
+  color: #fff;
+  border-radius: 1.2rem;
+  padding: 2rem;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(51, 65, 85, 0.25);
+}
+.hero h1 { color: #fff; }
+.hero p { color: rgba(255, 255, 255, 0.9); }
+.hero::after {               /* huellita decorativa de fondo */
+  content: '🐾';
+  position: absolute;
+  right: 1.5rem;
+  bottom: -1.5rem;
+  font-size: 8rem;
+  opacity: 0.15;
+  transform: rotate(-15deg);
+}
+.hero .btn-light { color: var(--celeste-oscuro); font-weight: 600; }
+
+/* ---------- Tarjetas ---------- */
+.card {
+  border: 1px solid var(--plomo-claro);
+  border-radius: 1rem;
+  overflow: hidden;
+}
+.card.shadow-sm { box-shadow: 0 4px 14px rgba(15, 23, 42, 0.07) !important; }
+.card-header { border-bottom-color: var(--plomo-claro); }
+
+/* La tarjeta de mascota se eleva al pasar el mouse */
+app-mascota-card .card { transition: transform 0.2s, box-shadow 0.2s; }
+app-mascota-card .card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 24px rgba(14, 165, 233, 0.18) !important;
+}
+
 .foto-mascota {
   height: 200px;
   object-fit: cover;
@@ -6,4 +140,63 @@
 .foto-vacia {
   height: 200px;
   font-size: 4rem;
+  background: linear-gradient(135deg, #bae6fd 0%, #e0f2fe 50%, #cbd5e1 100%);
+}
+
+/* ---------- Formularios ---------- */
+.form-control:focus, .form-select:focus {
+  border-color: var(--celeste);
+  box-shadow: 0 0 0 0.2rem rgba(14, 165, 233, 0.2);
+}
+.form-check-input:checked {
+  background-color: var(--celeste);
+  border-color: var(--celeste);
+}
+.form-label { font-weight: 600; color: var(--plomo-oscuro); }
+.input-group-text { background: var(--celeste-claro); color: var(--celeste-oscuro); }
+
+/* ---------- Pestañas y píldoras ---------- */
+.nav-tabs .nav-link { color: var(--plomo); }
+.nav-tabs .nav-link.active { color: var(--celeste-oscuro); font-weight: 600; }
+.nav-pills .nav-link { color: var(--plomo-oscuro); }
+.nav-pills .nav-link.active { background: var(--degradado); }
+
+/* ---------- Tabla ---------- */
+.table-celeste {
+  background: var(--degradado-oscuro);   /* un solo degradado para toda la fila */
+}
+.table-celeste th {
+  --bs-table-bg: transparent;
+  background: transparent !important;
+  box-shadow: none !important;
+  color: #fff !important;
+  font-weight: 600;
+  border: none;
+}
+.table-hover tbody tr:hover > * { background-color: var(--celeste-claro) !important; }
+
+/* ---------- Etiquetas de estado (componente EstadoBadge) ---------- */
+.estado-disponible { background: var(--celeste); color: #fff; }
+.estado-proceso    { background: #fbbf24; color: var(--negro); }
+.estado-adoptada   { background: var(--negro); color: #fff; }
+.estado-cancelada  { background: var(--plomo); color: #fff; }
+.estado-rechazada  { background: #dc2626; color: #fff; }
+
+/* ---------- Alertas y extras ---------- */
+.alert { border: none; border-left: 4px solid; border-radius: 0.6rem; }
+.alert-info { background: var(--celeste-claro); border-left-color: var(--celeste); color: var(--plomo-oscuro); }
+.breadcrumb a { text-decoration: none; }
+
+/* ---------- Pie de página ---------- */
+.pie {
+  background: var(--negro);
+  color: var(--plomo-claro);
+}
+.pie a { color: var(--celeste-medio); text-decoration: none; }
+
+/* El pie de página siempre queda abajo */
+app-root {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
 }

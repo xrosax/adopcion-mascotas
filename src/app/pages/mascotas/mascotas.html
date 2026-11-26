@@ -1,12 +1,18 @@
-<div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-3">
-  <div>
-    <h1 class="h3 mb-0">Mascotas en adopción</h1>
-    <p class="text-body-secondary mb-0">Encuentra a tu nuevo compañero o publica uno que necesite hogar.</p>
+<!-- ENCABEZADO con degradado celeste -> plomo -->
+<section class="hero mb-4">
+  <div class="row align-items-center g-3">
+    <div class="col-12 col-md-8">
+      <h1 class="h2 mb-2">Encuentra a tu nuevo mejor amigo</h1>
+      <p class="mb-0">Perros, gatos y otros animalitos rescatados en Oruro esperan un hogar.
+        Publícalo y ayúdalo a encontrar familia.</p>
+    </div>
+    <div class="col-12 col-md-4 text-md-end">
+      <a class="btn btn-light btn-lg shadow-sm" routerLink="/mascotas/publicar">
+        <i class="bi bi-plus-circle"></i> Publicar mascota
+      </a>
+    </div>
   </div>
-  <a class="btn btn-outline-success" routerLink="/mascotas/publicar">
-    <i class="bi bi-plus-circle"></i> Publicar mascota
-  </a>
-</div>
+</section>
 
 <!-- FILTROS: enlace de propiedades [value] + enlace de eventos (input)/(change) -->
 <div class="card card-body shadow-sm mb-4">
@@ -41,7 +47,7 @@
 </div>
 
 @if (cargando()) {
-  <div class="text-center py-5"><div class="spinner-border text-success"></div></div>
+  <div class="text-center py-5"><div class="spinner-border text-celeste"></div></div>
 } @else {
   <p class="text-body-secondary small">{{ filtradas().length }} de {{ mascotas().length }} mascotas</p>
 

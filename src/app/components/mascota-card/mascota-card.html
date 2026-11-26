@@ -2,7 +2,7 @@
   @if (mascota().foto) {
     <img [src]="mascota().foto" class="card-img-top foto-mascota" [alt]="'Foto de ' + mascota().nombre">
   } @else {
-    <div class="card-img-top foto-vacia bg-body-secondary d-flex align-items-center justify-content-center">
+    <div class="card-img-top foto-vacia d-flex align-items-center justify-content-center">
       {{ iconoEspecie() }}
     </div>
   }
@@ -22,7 +22,7 @@
     @if (esMia()) {
       <button class="btn btn-outline-secondary w-100" disabled>Publicada por ti</button>
     } @else {
-      <button class="btn btn-primary w-100"
+      <button class="btn btn-celeste w-100"
               [disabled]="mascota().estado !== 'Disponible'"
               (click)="pulsarSolicitar()">
         <i class="bi bi-heart"></i>

@@ -1,12 +1,12 @@
 @if (cargando()) {
-  <div class="text-center py-5"><div class="spinner-border text-success"></div></div>
+  <div class="text-center py-5"><div class="spinner-border text-celeste"></div></div>
 } @else if (noExiste()) {
   <!-- Identificador inexistente -->
   <div class="text-center py-5">
     <div class="display-1">🐾</div>
     <h1 class="h4">Solicitud no encontrada</h1>
     <p class="text-body-secondary">La solicitud #{{ id() }} no existe o no tienes permiso para verla.</p>
-    <a class="btn btn-success" routerLink="/solicitudes"><i class="bi bi-arrow-left"></i> Volver al historial</a>
+    <a class="btn btn-celeste" routerLink="/solicitudes"><i class="bi bi-arrow-left"></i> Volver al historial</a>
   </div>
 } @else if (solicitud(); as s) {
   <nav aria-label="breadcrumb">
@@ -64,7 +64,7 @@
                 </button>
               }
               @if (esPublicador()) {
-                <button class="btn btn-success" [disabled]="procesando()" (click)="cambiar('Aprobada')">
+                <button class="btn btn-celeste" [disabled]="procesando()" (click)="cambiar('Aprobada')">
                   <i class="bi bi-check-circle"></i> Aprobar adopción
                 </button>
                 <button class="btn btn-outline-danger" [disabled]="procesando()" (click)="cambiar('Rechazada')">
