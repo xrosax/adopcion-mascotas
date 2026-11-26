@@ -1,0 +1,103 @@
+@if (cargando()) {
+  <div class="text-center py-5"><div class="spinner-border text-success"></div></div>
+} @else if (noExiste()) {
+  <!-- Identificador inexistente -->
+  <div class="text-center py-5">
+    <div class="display-1">🐾</div>
+    <h1 class="h4">Solicitud no encontrada</h1>
+    <p class="text-body-secondary">La solicitud #{{ id() }} no existe o no tienes permiso para verla.</p>
+    <a class="btn btn-success" routerLink="/solicitudes"><i class="bi bi-arrow-left"></i> Volver al historial</a>
+  </div>
+} @else if (solicitud(); as s) {
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a routerLink="/solicitudes">Historial</a></li>
+      <li class="breadcrumb-item active">Solicitud #{{ s.id }}</li>
+    </ol>
+  </nav>
+
+  @if (recienCreada) {
+    <div class="alert alert-success"><i class="bi bi-check-circle"></i>
+      ¡Solicitud enviada! La mascota ahora está "En proceso" y no recibirá otras solicitudes.</div>
+  }
+  @if (mensaje()) {
+    <div class="alert alert-success"><i class="bi bi-check-circle"></i> {{ mensaje() }}</div>
+  }
+  @if (error()) {
+    <div class="alert alert-danger"><i class="bi bi-exclamation-triangle"></i> {{ error() }}</div>
+  }
+
+  <div class="row g-3">
+    <!-- Datos de la solicitud -->
+    <div class="col-12 col-lg-7">
+      <div class="card shadow-sm h-100">
+        <div class="card-header bg-white d-flex justify-content-between align-items-center">
+          <strong>SOLICITUD #{{ s.id }}</strong>
+          <app-estado-badge [estado]="s.estado" />
+        </div>
+        <div class="card-body">
+          <dl class="row mb-0">
+            <dt class="col-sm-4">Solicitante</dt>
+            <dd class="col-sm-8">{{ solicitante()?.nombre | titlecase }}</dd>
+            <dt class="col-sm-4">Celular</dt>
+            <dd class="col-sm-8">{{ s.telefono }}</dd>
+            <dt class="col-sm-4">Vivienda</dt>
+            <dd class="col-sm-8">{{ s.tipoVivienda | titlecase }} · {{ s.tienePatio ? 'con patio' : 'sin patio' }}</dd>
+            <dt class="col-sm-4">Fecha</dt>
+            <dd class="col-sm-8">{{ s.fecha | date: 'fullDate' }} · {{ s.fecha | date: 'shortTime' }}</dd>
+            @if (s.fechaActualizacion) {
+              <dt class="col-sm-4">{{ s.estado }} el</dt>
+              <dd class="col-sm-8">{{ s.fechaActualizacion | date: 'dd/MM/yyyy HH:mm' }}</dd>
+            }
+            <dt class="col-sm-4">Motivo</dt>
+            <dd class="col-sm-8">{{ s.motivo }}</dd>
+          </dl>
+        </div>
+
+        <!-- ACCIONES: solo si la solicitud está Pendiente -->
+        <div class="card-footer bg-white">
+          @if (pendiente()) {
+            <div class="d-flex flex-column flex-sm-row gap-2">
+              @if (esSolicitante()) {
+                <button class="btn btn-outline-danger" [disabled]="procesando()" (click)="cambiar('Cancelada')">
+                  <i class="bi bi-x-circle"></i> Cancelar solicitud
+                </button>
+              }
+              @if (esPublicador()) {
+                <button class="btn btn-success" [disabled]="procesando()" (click)="cambiar('Aprobada')">
+                  <i class="bi bi-check-circle"></i> Aprobar adopción
+                </button>
+                <button class="btn btn-outline-danger" [disabled]="procesando()" (click)="cambiar('Rechazada')">
+                  <i class="bi bi-x-circle"></i> Rechazar
+                </button>
+              }
+            </div>
+          } @else {
+            <span class="text-body-secondary small">
+              <i class="bi bi-lock"></i> Esta solicitud ya fue {{ s.estado | uppercase }} y no se puede modificar.
+            </span>
+          }
+        </div>
+      </div>
+    </div>
+
+    <!-- Mascota: aquí se ve la CONSECUENCIA del cambio de estado -->
+    <div class="col-12 col-lg-5">
+      @if (mascota(); as m) {
+        <div class="card shadow-sm h-100">
+          @if (m.foto) {
+            <img [src]="m.foto" class="card-img-top foto-mascota" [alt]="m.nombre">
+          }
+          <div class="card-body">
+            <div class="d-flex justify-content-between align-items-center mb-2">
+              <h2 class="h5 mb-0">{{ m.nombre | titlecase }}</h2>
+              <app-estado-badge [estado]="m.estado" />
+            </div>
+            <p class="small text-body-secondary mb-2">{{ m.especie | titlecase }} · {{ m.tamano | titlecase }} · {{ m.ubicacion }}</p>
+            <p class="small mb-0">{{ m.descripcion }}</p>
+          </div>
+        </div>
+      }
+    </div>
+  </div>
+}

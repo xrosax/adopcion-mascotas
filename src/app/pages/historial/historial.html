@@ -1,0 +1,67 @@
+<div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-3">
+  <h1 class="h3 mb-0">Historial de solicitudes</h1>
+  <a class="btn btn-success" routerLink="/solicitudes/nueva"><i class="bi bi-plus-lg"></i> Nueva solicitud</a>
+</div>
+
+<ul class="nav nav-pills mb-3">
+  <li class="nav-item">
+    <button class="nav-link" [class.active]="pestana() === 'enviadas'" (click)="pestana.set('enviadas')">
+      Enviadas <span class="badge text-bg-light">{{ enviadas().length }}</span>
+    </button>
+  </li>
+  <li class="nav-item">
+    <button class="nav-link" [class.active]="pestana() === 'recibidas'" (click)="pestana.set('recibidas')">
+      Recibidas <span class="badge text-bg-light">{{ recibidas().length }}</span>
+    </button>
+  </li>
+</ul>
+
+<div class="row mb-3">
+  <div class="col-12 col-sm-6 col-md-4">
+    <select class="form-select" [value]="filtroEstado()" (change)="filtroEstado.set($any($event.target).value)">
+      <option value="">Todos los estados</option>
+      @for (e of estados; track e) {
+        <option [value]="e">{{ e }}</option>
+      }
+    </select>
+  </div>
+</div>
+
+@if (cargando()) {
+  <div class="text-center py-5"><div class="spinner-border text-success"></div></div>
+} @else if (lista().length === 0) {
+  <div class="alert alert-info">
+    @if (pestana() === 'enviadas') {
+      No tienes solicitudes {{ filtroEstado() ? 'con estado ' + filtroEstado() : 'todavía' }}.
+    } @else {
+      Nadie ha enviado solicitudes {{ filtroEstado() ? 'con estado ' + filtroEstado() : '' }} para tus mascotas publicadas.
+    }
+  </div>
+} @else {
+  <div class="table-responsive shadow-sm rounded">
+    <table class="table table-hover align-middle mb-0 bg-white">
+      <thead class="table-success">
+        <tr>
+          <th>#</th>
+          <th>Mascota</th>
+          <th class="d-none d-md-table-cell">Vivienda</th>
+          <th>Fecha</th>
+          <th>Estado</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (s of lista(); track s.id) {
+          <tr role="button" (click)="abrir(s)">
+            <td>{{ s.id }}</td>
+            <td class="fw-semibold">{{ nombreMascota(s.mascotaId) | titlecase }}</td>
+            <td class="d-none d-md-table-cell">{{ s.tipoVivienda | titlecase }}</td>
+            <td class="small">{{ s.fecha | date: 'dd/MM/yyyy HH:mm' }}</td>
+            <td><app-estado-badge [estado]="s.estado" /></td>
+            <td class="text-end"><i class="bi bi-chevron-right"></i></td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+}
